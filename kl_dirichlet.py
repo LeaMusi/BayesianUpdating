@@ -4,6 +4,8 @@
 
 
 def kl_dirichlet(lambda_q,lambda_p):
+    import numpy as np
+    from scipy import special
         
     # KL divergence between two Dirichlet densities
     #
