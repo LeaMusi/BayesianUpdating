@@ -14,7 +14,7 @@ from scipy import stats, special
 from FirstLevelFit import FirstLevelFit
 
 
-os.chdir("/Users/ringelblume/Desktop/SemSur/Bayesian_Modeling/")
+os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 subj = 1
 tau = 18

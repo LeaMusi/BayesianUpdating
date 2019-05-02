@@ -12,6 +12,7 @@ def FirstLevelFit(seq, alpha0, beta0):
     from BayesianUpdating import BayesianUpdating
     
     input_sequences = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1)
+    tau = 18
 
     BayUpdMeasures = BayesianUpdating(input_sequences, tau, alpha0, beta0)
     
