@@ -29,4 +29,4 @@ else:
 sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + ".csv"
 seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
 
-#FirstLevelFit(seq, alpha0, beta0)
+FirstLevelRes = FirstLevelFit(seq, alpha0, beta0)

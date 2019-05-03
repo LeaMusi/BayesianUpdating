@@ -17,5 +17,6 @@ def FirstLevelFit(seq, alpha0, beta0):
     BayUpdMeasures = BayesianUpdating(input_sequences, tau, alpha0, beta0)
     
     input_output = seq.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
+    output = input_output[['seg', 'badseg', 'meanamp_ROI', 'word.y', 'baysur', 'prederr']]
     
-    return 
+    return output
