@@ -18,8 +18,7 @@ from LinearFit import LinearFit
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 subj = 1
-alpha0 = 1
-beta0 = 1
+tau = -100
 
 
 if subj < 10:
@@ -30,5 +29,8 @@ sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + 
 seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
 
 
-optim = optimize.minimize(fun = LinearFit, x0 = 18, args = (seq), method='Nelder-Mead', options={'maxiter': 8})
+
+optim = optimize.minimize(fun=LinearFit, x0=30, args=(seq), method='Nelder-Mead', options={'maxiter': 20})
+
+
 #LinearFit = LinearFit(tau, seq)
