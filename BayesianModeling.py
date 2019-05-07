@@ -10,14 +10,14 @@ import pandas as pd
 import numpy as np
 import os
 import math
-from scipy import stats, special
-from FirstLevelFit import FirstLevelFit
+from scipy import stats, special, optimize
+from LinearFit import LinearFit
+
 
 
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 subj = 1
-tau = 18
 alpha0 = 1
 beta0 = 1
 
@@ -29,4 +29,6 @@ else:
 sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + ".csv"
 seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
 
-FirstLevelRes = FirstLevelFit(seq, alpha0, beta0)
+
+optim = optimize.minimize(fun = LinearFit, x0 = 18, args = (seq), method='Nelder-Mead', options={'maxiter': 8})
+#LinearFit = LinearFit(tau, seq)
