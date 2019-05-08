@@ -18,7 +18,9 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     import pandas as pd
     import numpy as np
     import math
-    from kl_dirichlet import kl_dirichlet
+    #from kl_dirichlet import divergence
+    #from kl_dirichlet_alt import divergence
+    from simple_difference import divergence
     
     seqarray = seq_input.values # create array out of data frame for better computations
     seqarray2 = seq_input.values # create extra array for temporary storing of alphas
@@ -41,7 +43,7 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
         alphapost = sum(past)+const
         betapost = sum((1-past))+const
         seqarray2[0,col] = alphapost
-        kldiv = kl_dirichlet([alphapost, betapost], [alpha0, beta0])
+        kldiv = divergence(alphapost, betapost, alpha0, beta0)
         baysur_sum = baysur_sum + kldiv # Add up KL divergence across features/Bernoulli processes on this trial
     
     seq_input.loc[1,'baysur'] = baysur_sum
@@ -68,7 +70,7 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
             seqarray2[row, col] = alphapost
             alphapri = seqarray2[row-1, col]
             betapri = seqarray2[row-1, -1] - seqarray2[row-1, col]
-            kldiv = kl_dirichlet([alphapost, betapost], [alphapri, betapri])         
+            kldiv = divergence(alphapost, betapost, alphapri, betapri)         
             baysur_sum = baysur_sum + kldiv
         
         seq_input.loc[row+1, 'baysur'] = baysur_sum

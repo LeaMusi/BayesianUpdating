@@ -3,13 +3,13 @@
 # from scipy import special
 
 
-def kl_dirichlet(lambda_q,lambda_p):
+def divergence(alpha1, beta1, alpha2, beta2):
     import numpy as np
     from scipy import special
         
     # KL divergence between two Dirichlet densities
     #
-    # Calculate KL (Q||P) = <log Q/P> where avg is wrt Q
+    # Calculate KL (d1||d2) = <log Q/P> where avg is wrt Q
     # between two Dirichlet densities Q and P
     #
     # lambda_q      Parameter vector of first density (as list or numpy array)
@@ -22,8 +22,8 @@ def kl_dirichlet(lambda_q,lambda_p):
     # $Id: spm_kl_dirichlet.m 2696 2009-02-05 20:29:48Z guillaume $
     # Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
     
-    lambda_q = np.array(lambda_q)
-    lambda_p = np.array(lambda_p)
+    lambda_q = np.array([alpha1, beta1])
+    lambda_p = np.array([alpha2, beta2])
     
     m           = len(lambda_q)
     lambda_tot  = sum(lambda_q)
