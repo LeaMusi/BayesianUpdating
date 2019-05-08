@@ -76,5 +76,6 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
         seq_input.loc[row+1, 'baysur'] = baysur_sum
         
     output = seq_input.loc[:, 'baysur':'prederr']
+    
     return output
     

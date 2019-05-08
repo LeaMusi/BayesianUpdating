@@ -30,7 +30,7 @@ seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
 
 
 
-optim = optimize.minimize(fun=LinearFit, x0=30, args=(seq), method='Nelder-Mead', options={'maxiter': 20})
+optim = optimize.minimize(fun=LinearFit, x0=30, args=(seq), method='Nelder-Mead', options={'maxiter': 30})
 
 
 #LinearFit = LinearFit(tau, seq)
