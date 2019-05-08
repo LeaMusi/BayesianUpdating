@@ -43,8 +43,8 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
         alphapost = sum(past)+const
         betapost = sum((1-past))+const
         seqarray2[0,col] = alphapost
-        kldiv = divergence(alphapost, betapost, alpha0, beta0)
-        baysur_sum = baysur_sum + kldiv # Add up KL divergence across features/Bernoulli processes on this trial
+        div = divergence(alphapost, betapost, alpha0, beta0)
+        baysur_sum = baysur_sum + div # Add up KL divergence across features/Bernoulli processes on this trial
     
     seq_input.loc[1,'baysur'] = baysur_sum
     
@@ -70,8 +70,8 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
             seqarray2[row, col] = alphapost
             alphapri = seqarray2[row-1, col]
             betapri = seqarray2[row-1, -1] - seqarray2[row-1, col]
-            kldiv = divergence(alphapost, betapost, alphapri, betapri)         
-            baysur_sum = baysur_sum + kldiv
+            div = divergence(alphapost, betapost, alphapri, betapri)         
+            baysur_sum = baysur_sum + div
         
         seq_input.loc[row+1, 'baysur'] = baysur_sum
         
