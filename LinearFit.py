@@ -6,7 +6,7 @@ Created on %(date)s
 @author: %Lea
 """
 
-# 
+#Defines a function which uses 
 
 def LinearFit(tau, seq):
     from BayesianUpdating import BayesianUpdating
