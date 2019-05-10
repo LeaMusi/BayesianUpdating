@@ -18,9 +18,9 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     import pandas as pd
     import numpy as np
     import math
-    #from kl_dirichlet import divergence
+    from kl_dirichlet import divergence
     #from kl_dirichlet_alt import divergence
-    from simple_difference import divergence
+    #from simple_difference import divergence
     
     seqarray = seq_input.values # create array out of data frame for better computations
     seqarray2 = seq_input.values # create extra array for temporary storing of alphas
