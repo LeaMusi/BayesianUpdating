@@ -52,10 +52,13 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     # Proceed to the other trials/rows, using the posterior alpha and beta from the preceding trial as 
     # new prior alpha and beta
     for row in range(1, np.size(seqarray,0)):
-    
+        #print(row)
         wei0 = np.array(range(1,row+2))
         def downweigh(x):
-            return 1/math.exp((row+1-x)/tau)
+            if (row+1-x)/tau > 709: # starting with 710, the exponent becomes too large for math.exp to compute
+                return 0
+            else:
+                return 1/math.exp((row+1-x)/tau)
         downweigh_v = np.vectorize(downweigh)
         wei1 = downweigh_v(wei0)
         const = downweigh_v(0)
@@ -77,5 +80,5 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
         
     output = seq_input.loc[:, 'baysur':'prederr']
     
-    return output
+    return (output, seqarray2)
     

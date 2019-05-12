@@ -8,6 +8,7 @@ Created on %(date)s
 
 import matplotlib.pyplot as plt
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 from kl_dirichlet import divergence
 #from kl_dirichlet_alt import divergence
 #from simple_difference import divergence
@@ -25,14 +26,14 @@ def KL_plot(alpha0, alpha1, total0, total1):
     return div
 
 # Random scatter plot
-#fig = plt.figure()
-#ax = plt.axes(projection='3d')
+fig = plt.figure()
+ax = plt.axes(projection='3d')
 
-#x = np.random.rand(sample, 1) * sample
-#y = np.random.rand(len(x), 1) * sample + 1
-#z = KL_plot(x, y, sample, sample)
+x = np.random.rand(sample, 1) * sample
+y = np.random.rand(len(x), 1) * sample + 1
+z = KL_plot(x, y, sample, sample)
 
-#ax.scatter(x, y, z)
+ax.scatter(x, y, z)
 
 # Wireframe plot
 fig = plt.figure()
@@ -43,6 +44,6 @@ Y = np.repeat(np.linspace(1, sample, sample).reshape(1,sample), sample, axis=0)
 Z = KL_plot(X, Y, sample, sample)
 
 # Plot a basic wireframe.
-ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
+ax.plot_wireframe(X, Y, Z, rstride=2, cstride=2)
 
 plt.show()

@@ -8,10 +8,12 @@ Created on %(date)s
 
 import os
 import pandas as pd
-import math
-from BayesianUpdating import BayesianUpdating
+import matplotlib.pyplot as plt
+
 
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
+
+from BayesianUpdating import BayesianUpdating
 
 
 #FirstLevel = FirstLevelFit(subj=1, init_tau=30, iters=5)
@@ -31,11 +33,11 @@ input_output = seq[['seg', 'badseg', 'meanamp_ROI', 'word.y']]
 
 alpha0 = 1
 beta0 = 1
-tau = 5
+tau = 2
 
-for tau in range(2, 6, 2):
+for tau in range(2, 3):
     print(tau)
-    BayUpdMeasures = BayesianUpdating(seq_input, tau, alpha0, beta0)
+    (BayUpdMeasures, seqarray2) = BayesianUpdating(seq_input, tau, alpha0, beta0)
     
     BayUpdMeasures = BayUpdMeasures[['baysur']]
     input_output = input_output.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
