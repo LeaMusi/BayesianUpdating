@@ -15,7 +15,7 @@ Spyder Editor
 
 
 def BayesianUpdating(seq_input, tau, alpha0, beta0):
-    import pandas as pd
+    #import pandas as pd
     import numpy as np
     import math
     from kl_dirichlet import divergence

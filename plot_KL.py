@@ -6,10 +6,8 @@ Created on %(date)s
 @author: %Lea
 """
 
-import mpl_toolkits.mplot3d as mplt
 import matplotlib.pyplot as plt
 import numpy as np
-import random
 from kl_dirichlet import divergence
 #from kl_dirichlet_alt import divergence
 #from simple_difference import divergence
