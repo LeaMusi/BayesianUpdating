@@ -6,21 +6,16 @@ Created on %(date)s
 @author: %Lea
 """
 
-from mpl_toolkits.mplot3d import Axes3D
+import mpl_toolkits.mplot3d as mplt
 import matplotlib.pyplot as plt
 import numpy as np
 import random
-
 from kl_dirichlet import divergence
 #from kl_dirichlet_alt import divergence
 #from simple_difference import divergence
 
 
-alpha0 = 4
-alpha1 = 6
-total0 = 10
-total1 = 11
-
+sample = 100
 
 
 def KL_plot(alpha0, alpha1, total0, total1):
@@ -31,12 +26,25 @@ def KL_plot(alpha0, alpha1, total0, total1):
     
     return div
 
+# Random scatter plot
+#fig = plt.figure()
+#ax = plt.axes(projection='3d')
 
+#x = np.random.rand(sample, 1) * sample
+#y = np.random.rand(len(x), 1) * sample + 1
+#z = KL_plot(x, y, sample, sample)
+
+#ax.scatter(x, y, z)
+
+# Wireframe plot
 fig = plt.figure()
-ax = plt.axes(projection='3d')
+ax = fig.add_subplot(111, projection='3d')
 
-x = np.random.rand(400, 1)*100
-y = np.random.rand(len(x), 1)*100 + 2
-z = KL_plot(x, y, 121, 122)
+X = np.repeat(np.linspace(2,sample+1, sample).reshape(sample,1), sample, axis=1)
+Y = np.repeat(np.linspace(1, sample, sample).reshape(1,sample), sample, axis=0)
+Z = KL_plot(X, Y, sample, sample)
 
-ax.scatter(x, y, z)
+# Plot a basic wireframe.
+ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
+
+plt.show()
