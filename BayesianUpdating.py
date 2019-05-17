@@ -33,43 +33,50 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     seq_input['prederr'] = np.NaN
     
     # Compute Bayesian updating for first trial using a prior based on alpha0 and beta0
-    const = 1/math.exp((1)/tau)    
-    seqarray2[0,-1] = 1 + 2*const
+    wei0 = np.array(range(1,np.size(seqarray,0)+2))
+    def downweigh(x):
+        return 1/math.exp((np.size(seqarray,0)+1-x)/tau)
+    downweigh_v = np.vectorize(downweigh)
+    wei1 = downweigh_v(wei0)
+    
+    # Fill first row
+    row=0
+    #print(row)
     baysur_sum = 0  
     prederr_sum = 0
     
     for col in range(0, np.size(seqarray,1)):
-        past = seqarray[0:1,col]
-        alphapost = sum(past)+const
-        betapost = sum((1-past))+const
-        seqarray2[0,col] = alphapost
-        div = divergence(alphapost, betapost, alpha0, beta0)
-        baysur_sum = baysur_sum + div # Add up KL divergence across features/Bernoulli processes on this trial
+        past = seqarray[0:row+1,col]
+        past = np.insert(past, 0, 1)
+        pasttotal = np.ones(row+1)
+        pasttotal = np.insert(pasttotal, 0, 2)
+        seqarray2[row, -1] = sum(pasttotal*wei1[len(wei1)-row-2:len(wei1)+1])
+        alphapost = sum(past*wei1[len(wei1)-row-2:len(wei1)+1])
+        betapost = sum((pasttotal-past)*wei1[len(wei1)-row-2:len(wei1)+1])
+        seqarray2[row, col] = alphapost
+        alphapri = alpha0
+        betapri = beta0
+        div = divergence(alphapost, betapost, alphapri, betapri)         
+        baysur_sum = baysur_sum + div
     
-    seq_input.loc[1,'baysur'] = baysur_sum
+    seq_input.loc[row+1, 'baysur'] = baysur_sum
     
     
     # Proceed to the other trials/rows, using the posterior alpha and beta from the preceding trial as 
     # new prior alpha and beta
     for row in range(1, np.size(seqarray,0)):
         #print(row)
-        wei0 = np.array(range(1,row+2))
-        def downweigh(x):
-            if (row+1-x)/tau > 709: # starting with 710, the exponent becomes too large for math.exp to compute
-                return 0
-            else:
-                return 1/math.exp((row+1-x)/tau)
-        downweigh_v = np.vectorize(downweigh)
-        wei1 = downweigh_v(wei0)
-        const = downweigh_v(0)
-        seqarray2[row,-1] = sum(wei1) + 2*const
         baysur_sum = 0  
         prederr_sum = 0
-             
+        
         for col in range(0, np.size(seqarray,1)):
             past = seqarray[0:row+1,col]
-            alphapost = sum(past*wei1)+const
-            betapost = sum((1-past)*wei1)+const
+            past = np.insert(past, 0, 1)
+            pasttotal = np.ones(row+1)
+            pasttotal = np.insert(pasttotal, 0, 2)
+            seqarray2[row, -1] = sum(pasttotal*wei1[len(wei1)-row-2:len(wei1)+1])
+            alphapost = sum(past*wei1[len(wei1)-row-2:len(wei1)+1])
+            betapost = sum((pasttotal-past)*wei1[len(wei1)-row-2:len(wei1)+1])
             seqarray2[row, col] = alphapost
             alphapri = seqarray2[row-1, col]
             betapri = seqarray2[row-1, -1] - seqarray2[row-1, col]

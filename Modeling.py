@@ -12,7 +12,8 @@ from FirstLevelFit import FirstLevelFit
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 
-FirstLevel = FirstLevelFit(subj=1, init_tau=1, iters=2)
+#FirstLevel = FirstLevelFit(subj=1, init_tau=1, iters=2)
 
-#subj = 1
+subj = 1
+tau=30
 #init_tau = 50
