@@ -28,16 +28,16 @@ else:
 sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + ".csv"
 
 seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
-seq_input = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1)  
+seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1)  
 input_output = seq[['seg', 'badseg', 'meanamp_ROI', 'word.y']]  
 
 alpha0 = 1
 beta0 = 1
-tau = 2
+tau = 6
 
-for tau in range(2, 3):
+for tau in range(5, 7):
     print(tau)
-    (BayUpdMeasures, seqarray2) = BayesianUpdating(seq_input, tau, alpha0, beta0)
+    (BayUpdMeasures, seqarray2) = BayesianUpdating(seq_forUpd, tau, alpha0, beta0)
     
     BayUpdMeasures = BayUpdMeasures[['baysur']]
     input_output = input_output.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)

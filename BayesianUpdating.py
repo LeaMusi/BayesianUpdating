@@ -17,6 +17,7 @@ Spyder Editor
 def BayesianUpdating(seq_input, tau, alpha0, beta0):
     #import pandas as pd
     import numpy as np
+    np.seterr(all='ignore')
     import math
     from kl_dirichlet import divergence
     #from kl_dirichlet_alt import divergence
@@ -54,9 +55,7 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
         alphapost = sum(past*wei1[len(wei1)-row-2:len(wei1)+1])
         betapost = sum((pasttotal-past)*wei1[len(wei1)-row-2:len(wei1)+1])
         seqarray2[row, col] = alphapost
-        alphapri = alpha0
-        betapri = beta0
-        div = divergence(alphapost, betapost, alphapri, betapri)         
+        div = divergence(alphapost, betapost, alpha0, beta0)         
         baysur_sum = baysur_sum + div
     
     seq_input.loc[row+1, 'baysur'] = baysur_sum

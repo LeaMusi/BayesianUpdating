@@ -16,9 +16,9 @@ def LinearFit(tau, seq):
     alpha0 = 1
     beta0 = 1
     
-    seq_input = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1)
+    seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1)
 
-    (BayUpdMeasures, seqarray2) = BayesianUpdating(seq_input, tau, alpha0, beta0)
+    (BayUpdMeasures, seqarray2) = BayesianUpdating(seq_forUpd, tau, alpha0, beta0)
     
     input_output = seq.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
     input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'word.y', 'baysur', 'prederr']]
