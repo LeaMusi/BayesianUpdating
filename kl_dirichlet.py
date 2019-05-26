@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on %(date)s
+
+@author: %Lea Musiolek
+"""
+
+
+
 # Requires:
 # import numpy as np
 # from scipy import special

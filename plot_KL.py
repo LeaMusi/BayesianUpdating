@@ -3,8 +3,9 @@
 """
 Created on %(date)s
 
-@author: %Lea
+@author: %Lea Musiolek
 """
+
 
 import matplotlib.pyplot as plt
 import numpy as np

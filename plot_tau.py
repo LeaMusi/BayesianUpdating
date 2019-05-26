@@ -3,7 +3,7 @@
 """
 Created on %(date)s
 
-@author: %Lea
+@author: %Lea Musiolek
 """
 
 import os

@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Lea Musiolek, April 2019
-
 """
-Spyder Editor
+Created on %(date)s
+
+@author: %Lea Musiolek
 """
 
 # Defines a Bayesian updating scheme as a function
