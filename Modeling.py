@@ -7,13 +7,19 @@ Created on %(date)s
 """
 
 import os
+import time
 from FirstLevelFit import FirstLevelFit
 
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 
-FirstLevel = FirstLevelFit(subj=1, iters=10)
-
-#subj = 1
-#tau=30
-#init_tau = 50
+for sub in range(1,2):
+    
+    starttime = time.time() # Check time
+    
+    (opttau, negloglike, ml_lm) = FirstLevelFit(subj=sub, iters=10, bounds=[5, 40])
+    
+    elapsed_20iter = time.time() - starttime # Compute time needed for optimization
+    
+    #firstlevel = np.array([(str(sub)), elapsed_20iter, opttau, negloglike, ml_lm.coeff)],
+    #                       ... dtype=[('name', 'U10'), ('age', 'i4'), ('weight', 'f4')])

@@ -43,4 +43,4 @@ def LinearFit(tau, subj):
     #neglikeli = -1 * (np.exp( -1 * resid_sum_sq / (2 * sigmasq**2)) /(sigmasq * np.sqrt(2 * np.pi)))
     negloglikeli = -1*(-1*(n*math.log(2*np.pi)/2) -1*(n*math.log(sigmasq)/2) -1*resid_sum_sq/(2*sigmasq**2))
     
-    return negloglikeli
+    return negloglikeli, lm
