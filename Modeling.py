@@ -8,18 +8,22 @@ Created on %(date)s
 
 import os
 import time
+import pandas as pd
 from FirstLevelFit import FirstLevelFit
 
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 
-for sub in range(1,2):
+firstlevel = pd.DataFrame(columns=['subject', 'minutes_elapsed', 'negative_log_likelihood', 'optimal_tau', 'regr_slope', 'regr_intercept'])
+
+for sub in range(1,41):
     
     starttime = time.time() # Check time
     
     (opttau, negloglike, ml_lm) = FirstLevelFit(subj=sub, iters=10, bounds=[5, 40])
     
-    elapsed_20iter = time.time() - starttime # Compute time needed for optimization
+    elapsed_10iter = time.time() - starttime # Compute time needed for optimization
     
-    #firstlevel = np.array([(str(sub)), elapsed_20iter, opttau, negloglike, ml_lm.coeff)],
-    #                       ... dtype=[('name', 'U10'), ('age', 'i4'), ('weight', 'f4')])
+    firstlevel.loc[sub-1,:] = [str(sub), round(elapsed_10iter)/60, negloglike, opttau, ml_lm.coef_[0], ml_lm.intercept_]
+    
+    firstlevel.to_csv("firstlevel_parameters.csv", sep=";")
