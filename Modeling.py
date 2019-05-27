@@ -20,10 +20,10 @@ for sub in range(1,41):
     
     starttime = time.time() # Check time
     
-    (opttau, negloglike, ml_lm) = FirstLevelFit(subj=sub, iters=10, bounds=[5, 40])
+    (opttau, negloglike, ml_lm) = FirstLevelFit(subj=sub, iters=15, bounds=[5, 40])
     
-    elapsed_10iter = time.time() - starttime # Compute time needed for optimization
+    elapsed = time.time() - starttime # Compute time needed for optimization
     
-    firstlevel.loc[sub-1,:] = [str(sub), round(elapsed_10iter)/60, negloglike, opttau, ml_lm.coef_[0], ml_lm.intercept_]
+    firstlevel.loc[sub-1,:] = [str(sub), round(elapsed)/60, negloglike, opttau, ml_lm.coef_[0], ml_lm.intercept_]
     
     firstlevel.to_csv("firstlevel_parameters.csv", sep=";")
