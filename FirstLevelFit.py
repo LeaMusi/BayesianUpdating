@@ -15,12 +15,12 @@ def FirstLevelFit(subj, iters, bounds):
     from LinearFit import LinearFit
     
     def LinearFitForOpt(tau, subj):
-        (negloglike, lm) = LinearFit(tau, subj)
-        return negloglike
+        (costfun, lm) = LinearFit(tau, subj)
+        return costfun
     
     opt = optimize.minimize_scalar(fun=LinearFitForOpt, args=(subj), bounds=bounds, method='Bounded', options={'maxiter':iters})
     opttau = opt.x
     
-    (negloglike, ml_lm) = LinearFit(opttau, subj)
+    (costfun, ml_lm) = LinearFit(opttau, subj)
     
-    return opttau, negloglike, ml_lm
+    return opttau, costfun, ml_lm

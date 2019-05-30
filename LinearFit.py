@@ -38,9 +38,9 @@ def LinearFit(tau, subj):
     x = input_output.baysur.values.reshape((-1, 1))
     lm = LinearRegression().fit(x, y)
     resid_sum_sq = np.sum(np.power(y - lm.predict(X=x), 2))
-    sigmasq = np.var(y - lm.predict(X=x))
-    n = len(y)
-    #neglikeli = -1 * (np.exp( -1 * resid_sum_sq / (2 * sigmasq**2)) /(sigmasq * np.sqrt(2 * np.pi)))
-    negloglikeli = -1*(-1*(n*math.log(2*np.pi)/2) -1*(n*math.log(sigmasq)/2) -1*resid_sum_sq/(2*sigmasq**2))
+    #sigmasq = np.var(y - lm.predict(X=x))
+    #n = len(y)
+
+    #negloglikeli = -1*(-1*(n*math.log(2*np.pi)/2) -1*(n*math.log(sigmasq)/2) -1*resid_sum_sq/(2*sigmasq**2))
     
-    return negloglikeli, lm
+    return resid_sum_sq, lm
