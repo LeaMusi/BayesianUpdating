@@ -14,7 +14,7 @@ from BayesianUpdating import BayesianUpdating
 
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
-taurange = np.array([5,10,15,20,25,30,35,40,50,60,1000])
+taurange = np.array([5,10,15,20,25,30,35,40,500,1000,2000])
 subj = 22
 ntrials = 100 # Set number of example trials to be used for plotting
 alpha0 = 1 # Set uniform priors
@@ -40,7 +40,7 @@ for tau in taurange:
     seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1) # has to be done here, because otherwise next line modifies this object
     BayUpdMeasures = BayesianUpdating(seq_forUpd, tau, alpha0, beta0)
     BayUpdMeasures = BayUpdMeasures[['baysur']]
-    BayUpdMeasures.columns = ['bs tau='+str(tau)]
+    BayUpdMeasures.columns = ['tau='+str(tau)]
     input_output = input_output.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
 
 
@@ -56,7 +56,6 @@ for column in forplot.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1):
  
 plt.legend(loc=2, ncol=2) # Add legend
 # Add titles
-plt.title("Bayesian Surprise on 200 example trials", loc='center', fontsize=14, fontweight=0, color='black')
 plt.xlabel("Trial", fontsize=12)
-plt.ylabel("Bayesian Surprise", fontsize=12)
+plt.ylabel("Semantic Surprise", fontsize=12)
 plt.savefig('regressorplot.png', dpi=400)
