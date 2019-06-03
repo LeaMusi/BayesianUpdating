@@ -16,7 +16,7 @@ os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 firstlevel = pd.DataFrame(columns=['subject', 'minutes_elapsed', 'cost_function', 'optimal_tau', 'regr_slope', 'regr_intercept'])
 
-for sub in range(35,41):
+for sub in range(1,41):
     
     starttime = time.time() # Check time
     
