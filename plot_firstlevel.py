@@ -29,6 +29,14 @@ plt.hist(data.values[:, 3], bins=50)  # arguments are passed to np.histogram
 plt.xlabel("Tau", fontsize=12)
 plt.savefig('tauplot.png', dpi=400)
 
+plt.close()
+
+# Compute mean and median of slope and intercept
+slopemedian = np.median(data.regr_slope)
+slopemean = np.mean(data.regr_slope)
+interceptmedian = np.median(data.regr_intercept)
+interceptmean = np.mean(data.regr_intercept)
+
 
 # Plot regression lines for each participant
 for row in range(0, len(data)):
@@ -37,6 +45,12 @@ for row in range(0, len(data)):
     x = np.array([0,1])
     # plot fit
     plt.plot(x, f(x), marker='', linewidth=0.3, alpha=0.9)
+    
+f = lambda x: slopemedian*x + interceptmedian
+# x values of line to plot
+x = np.array([0,1])
+# plot fit
+plt.plot(x, f(x), marker='', c="black", linewidth=1, alpha=0.9)
     
 plt.xlabel("Semantic Surprise, normalized", fontsize=12)
 plt.ylabel("N400 mean amplitude", fontsize=12)
