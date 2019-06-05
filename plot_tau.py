@@ -14,7 +14,7 @@ from BayesianUpdating import BayesianUpdating
 
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
-taurange = np.array([5,10,15,20,25,30,35,40,200])
+taurange = np.array([5,10,50,200,500,1000])
 subj = 1
 ntrials = 100 # Set number of example trials to be used for plotting
 alpha0 = 1 # Set uniform priors
