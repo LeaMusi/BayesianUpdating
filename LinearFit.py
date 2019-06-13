@@ -26,12 +26,12 @@ def LinearFit(tau, subj):
     sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + ".csv"
     seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
     seq = seq.dropna(axis=0, how='any', subset=['word.y'], inplace=False)
-    seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1)
+    seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen'], axis=1)
 
     BayUpdMeasures = BayesianUpdating(seq_forUpd, tau, alpha0, beta0)
     
     input_output = seq.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
-    input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'word.y', 'baysur', 'prederr']]
+    input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur', 'prederr']]
     maxbs = max(input_output.baysur)
     minbs = min(input_output.baysur)
     input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs)
@@ -40,10 +40,10 @@ def LinearFit(tau, subj):
     input_output = input_output.loc[input_output['badseg'] != 1]
     input_output = input_output.dropna(axis=0, how='any', subset=['meanamp_ROI'], inplace=False)
     
-    y = input_output.meanamp_ROI.values
-    x = input_output.baysur.values.reshape((-1, 1))
-    lm = LinearRegression().fit(x, y)
-    resid_sum_sq = np.sum(np.power(y - lm.predict(X=x), 2))
+    y = input_output.meanamp_ROI
+    X = input_output[['wordreps', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur']]
+    lm = LinearRegression().fit(X, y)
+    resid_sum_sq = lm._residues
     #sigmasq = np.var(y - lm.predict(X=x))
     #n = len(y)
 
