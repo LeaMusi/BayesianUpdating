@@ -10,7 +10,7 @@ Created on %(date)s
 # optimizes the tau value for their Bayesian Updating iteratively using the bounded Brent-Dekker method, 
 # while fitting a simple linear regression at each step
 
-def FirstLevelFit(subj, iters, bounds):
+def FirstLevelFit(subj, iters, bounds, initial_simplex):
     from scipy import optimize
     from LinearFit import LinearFit
     
@@ -18,7 +18,12 @@ def FirstLevelFit(subj, iters, bounds):
         (costfun, lm) = LinearFit(tau, subj)
         return costfun
     
-    opt = optimize.minimize_scalar(fun=LinearFitForOpt, args=(subj), bounds=bounds, method='Bounded', options={'maxiter':iters})
+    def callbackF(x):
+        print(x)
+    
+    #opt = optimize.minimize_scalar(fun=LinearFitForOpt, args=(subj), bounds=bounds, method='Bounded', options={'maxiter':iters})
+    opt = optimize.minimize(fun=LinearFitForOpt, x0=1000, args=(subj), method='Nelder-Mead', options={'maxiter':iters, 'initial_simplex':[[5],[5000]]}, callback=callbackF)
+    #opt = optimize.basinhopping(func=LinearFitForOpt, x0=1000, full_output=True, minimizer_kwargs={'args':subj}, niter=10, disp=True)
     opttau = opt.x
     
     (costfun, ml_lm) = LinearFit(opttau, subj)
