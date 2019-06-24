@@ -9,7 +9,7 @@ Created on %(date)s
 # Defines a function which uses a tau value and a participant's sequence to compute 
 # Bayesian Surprise with uniform priors
 
-def LinearFit(tau, subj):
+def LinearFit(tau, subj, simul):
     from BayesianUpdating import BayesianUpdating
     from sklearn.linear_model import LinearRegression
     import numpy as np
@@ -23,7 +23,10 @@ def LinearFit(tau, subj):
         substr = '0' + str(subj)
     else:
         substr = str(subj)
-    sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + ".csv"
+    if simul == 1:
+        sub_path = '/Users/ringelblume/Desktop/SemSur/Data/simufile' + substr + '.csv'
+    else:
+        sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + '.csv'
     seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ", index_col=0)
     seq = seq.dropna(axis=0, how='any', subset=['word.y'], inplace=False)
     seq = seq.sort_values('seg')
