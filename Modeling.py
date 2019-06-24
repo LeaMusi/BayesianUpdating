@@ -14,7 +14,7 @@ from FirstLevelFit import FirstLevelFit
 os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 
-firstlevel = pd.DataFrame(columns=['subject', 'minutes_elapsed', 'cost_function', 'optimal_tau', 'baysur_slope', 'regr_intercept'])
+firstlevel = pd.DataFrame(columns=['subject', 'minutes_elapsed', 'cost_function', 'optimal_tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
 
 for sub in range(1,3):
     
@@ -24,6 +24,6 @@ for sub in range(1,3):
     
     elapsed = time.time() - starttime # Compute time needed for optimization
     
-    firstlevel.loc[sub-1,:] = [str(sub), round(elapsed)/60, costfun, opttau, ml_lm.coef_[-1], ml_lm.intercept_]
+    firstlevel.loc[sub-1,:] = [str(sub), round(elapsed)/60, costfun, opttau, ml_lm.coef_[-1], ml_lm.intercept_, '']
     
     firstlevel.to_csv("firstlevel_parameters_simplex5_5000.csv", sep=";")

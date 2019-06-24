@@ -24,7 +24,7 @@ def LinearFit(tau, subj):
     else:
         substr = str(subj)
     sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + ".csv"
-    seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
+    seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ", index_col=0)
     seq = seq.dropna(axis=0, how='any', subset=['word.y'], inplace=False)
     seq = seq.sort_values('seg')
     seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen'], axis=1)
