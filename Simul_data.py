@@ -58,6 +58,7 @@ if len(seq)==len(input_output):
 else:
     print('Error - seq file not of same length as input_output file')
 
+seq.to_csv(path_or_buf='/Users/ringelblume/Desktop/SemSur/Data/simufile_SemSur_' + substr + ".csv", sep=" ", header=True, index=True, index_label=None, mode='w')
 
-
+#simufile = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ")
 
