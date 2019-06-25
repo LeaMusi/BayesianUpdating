@@ -24,8 +24,8 @@ def LinearFit(tau, subj, simul):
     else:
         substr = str(subj)
     if simul == 1:
-        sub_path = '/Users/ringelblume/Desktop/SemSur/Data/simufile' + substr + '.csv'
-    else:
+        sub_path = 'Simudata/simufile' + substr + '.csv'
+    elif simul == 0:
         sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + '.csv'
     seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ", index_col=0)
     seq = seq.dropna(axis=0, how='any', subset=['word.y'], inplace=False)

@@ -18,7 +18,7 @@ import math
 import time
 
 
-realvals = pd.DataFrame(columns=['subject', 'minutes_elapsed', 'cost_function', 'tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
+realvals = pd.DataFrame(columns=['simufile', 'subject', 'minutes_elapsed', 'cost_function', 'tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
 
 
 counter = 0
@@ -29,7 +29,7 @@ for tau in [10,400,2000]:
     for bet in range(0,2):
         beta_coefs = coef_array[bet]
         for intercept in [-1, 10]:
-            for sigmasq in [5, 300]:
+            for sigmasq in [0.5, 300]:
                 counter = counter+1
                 
                 starttime = time.time()
@@ -70,12 +70,11 @@ for tau in [10,400,2000]:
                     coustr = '0' + str(counter)
                 else:
                     coustr = str(counter)
-                seq.to_csv(path_or_buf='/Users/ringelblume/Desktop/SemSur/Data/simufile' + coustr + '.csv', sep=" ", header=True, mode='w')
+                seq.to_csv(path_or_buf='Simudata/simufile' + coustr + '.csv', sep=" ", header=True, mode='w')
                 
                 elapsed = time.time() - starttime
                 print(counter, elapsed)
-                #simufile = pd.read_csv('/Users/ringelblume/Desktop/SemSur/Data/simufile_SemSur_' + substr + ".csv", encoding = 'unicode_escape', sep=" ", index_col=0)
                 
-                realvals.loc[counter,:] = [str(subj), '', '', tau, beta_coefs[-1], intercept, sigmasq]
+                realvals.loc[counter,:] = [str(counter), str(subj), '', '', tau, beta_coefs[-1], intercept, sigmasq]
                 
-realvals.to_csv('simufile_realvals.csv', sep=";")
+                realvals.to_csv('simufile_realvals.csv', sep=";")
