@@ -24,7 +24,7 @@ for sub in range(1,3): # when simul == 1, sub stands for the counter of simulati
     
     starttime = time.time() # Check time
     
-    (opttau, costfun, ml_lm) = FirstLevelFit(simul=simul, subj=sub, iters=30, bounds=[5, 5000], initial_simplex=[[5],[5000]])
+    (opttau, costfun, ml_lm) = FirstLevelFit(simul=simul, subj=sub, iters=50, bounds=[5, 5000], initial_simplex=[[5],[5000]])
     
     elapsed = time.time() - starttime # Compute time needed for optimization
     
