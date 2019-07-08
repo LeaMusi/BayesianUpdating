@@ -21,8 +21,8 @@ def FirstLevelFit(subj, iters, bounds, initial_simplex, simul):
     def callbackF(x):
         print(x)
     
-    opt = optimize.minimize_scalar(fun=LinearFitForOpt, args=(subj, simul), bounds=bounds, method='Bounded', options={'maxiter':iters})
-    #opt = optimize.minimize(fun=LinearFitForOpt, x0=1000, args=(subj, simul), method='Nelder-Mead', options={'maxiter':iters, 'initial_simplex':[[5],[5000]]}, callback=callbackF)
+    #opt = optimize.minimize_scalar(fun=LinearFitForOpt, args=(subj, simul), bounds=bounds, method='Bounded', options={'maxiter':iters})
+    opt = optimize.minimize(fun=LinearFitForOpt, x0=1000, args=(subj, simul), method='Nelder-Mead', options={'maxiter':iters, 'initial_simplex':[[5],[5000]]}, callback=callbackF)
     #opt = optimize.basinhopping(func=LinearFitForOpt, x0=1000, full_output=True, minimizer_kwargs={'args':subj, simul}, niter=10, disp=True)
     opttau = opt.x
     

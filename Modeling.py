@@ -31,6 +31,6 @@ for sub in range(1,3): # when simul == 1, sub stands for the counter of simulati
     firstlevel.loc[sub-1,:] = [str(sub), round(elapsed)/60, costfun, opttau, ml_lm.coef_[-1], ml_lm.intercept_, '']
     
     if simul == 1:
-        firstlevel.to_csv("simul_parameters_bounds5_5000.csv", sep=";")
+        firstlevel.to_csv("simul_parameters_simplex5_5000.csv", sep=";")
     elif simul == 0:
-        firstlevel.to_csv("SemSur_parameters_bounds5_5000.csv", sep=";")
+        firstlevel.to_csv("SemSur_parameters_simplex5_5000.csv", sep=";")
