@@ -23,10 +23,12 @@ def LinearFit(tau, subj, simul):
         substr = '0' + str(subj)
     else:
         substr = str(subj)
+        
     if simul == 1:
         sub_path = 'Simudata/simufile' + substr + '.csv'
     elif simul == 0:
         sub_path = '/Users/ringelblume/Desktop/SemSur/Data/basefile_SemSur_' + substr + '.csv'
+    
     seq = pd.read_csv(sub_path, encoding = 'unicode_escape', sep=" ", index_col=0)
     seq = seq.dropna(axis=0, how='any', subset=['word.y'], inplace=False)
     seq = seq.sort_values('seg')
@@ -50,9 +52,9 @@ def LinearFit(tau, subj, simul):
     lm = LinearRegression().fit(X, y)
     #resid_sum_sq = lm._residues (sometimes empty array)
     resid_sum_sq = sum(np.power((y - lm.predict(X=X)),2))
-    #sigmasq = np.var(y - lm.predict(X=X))
+    sigmasq = np.var(y - lm.predict(X=X))
     #n = len(y)
 
     #negloglikeli = -1*(-1*(n*math.log(2*np.pi)/2) -1*(n*math.log(sigmasq)/2) -1*resid_sum_sq/(2*sigmasq**2))
     
-    return resid_sum_sq, lm
+    return resid_sum_sq, lm, sigmasq
