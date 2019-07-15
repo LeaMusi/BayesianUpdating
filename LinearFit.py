@@ -41,7 +41,10 @@ def LinearFit(tau, subj, simul):
     input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur', 'prederr']]
     maxbs = max(input_output.baysur)
     minbs = min(input_output.baysur)
-    input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs)
+    input_output = input_output.replace([np.inf, -np.inf], np.nan).dropna(axis=0, subset=["baysur"], how="any") # remove rows with infinite values for baysur
+    input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs) # re-scales the regressor to its own range
+    maxbs = max(input_output.baysur)
+    print("maximum of BS = " + str(maxbs))
     input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
     
     input_output = input_output.loc[input_output['badseg'] != 1]
