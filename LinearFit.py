@@ -44,7 +44,7 @@ def LinearFit(tau, subj, simul):
     minbs = min(input_output.baysur)
     input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs) # re-scales the regressor to its own range
     maxbs = max(input_output.baysur)
-    print("maximum of BS = " + str(maxbs))
+    print("maximum of BS = " + str(maxbs) + ", data points after inf removal: " + str(len(input_output)))
     input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
     
     input_output = input_output.loc[input_output['badseg'] != 1]
