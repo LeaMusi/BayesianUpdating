@@ -57,7 +57,7 @@ subj = 1 # which subject's stimulus sequence to use for simulation
 for tau in [5,10,15,20,50,100]:
     for bet in range(0,len(coef_array)):
         beta_coefs = coef_array[bet]
-        for sigmasq in [medvar, meanvar]:
+        for sigmasq in [1, medvar, meanvar]:
             counter = counter+1
             
             starttime = time.time()
@@ -129,7 +129,7 @@ for subj in range(1,num_simfiles+1):
 
 
 ############################# Plot recovered parameters
-import matplotlib.pyplot as plt  
+#import matplotlib.pyplot as plt  
 import seaborn as sns      
         
 realvals = pd.read_csv('Simudata/simufile_realvals.csv', sep=";", index_col=0)
@@ -138,15 +138,18 @@ recovery = pd.read_csv("Simudata/recovery_all_simfiles.csv", sep=";", index_col=
 merged = pd.merge(left=realvals, right=recovery, on="simufile")
 merged['realparams'] = merged.apply(lambda row: "realtau=" + str(row.real_tau) + "_realslope=" + str(row.real_slope), axis=1)
 
-smallvar = merged[merged.sigmasqr <= (medvar + meanvar)/2]
-largevar = merged[merged.sigmasqr > (medvar + meanvar)/2]
+recov_smallvar = merged[round(merged.sigmasqr) == round(1)]
+recov_medvar = merged[round(merged.sigmasqr) == round(medvar)]
+recov_meanvar = merged[round(merged.sigmasqr) == round(meanvar)]
 
-smallvarplot = sns.lmplot(x="tau", y="cost_function", data=smallvar, fit_reg=False, hue='realparams', legend=True)
+smallvarplot = sns.lmplot(x="tau", y="cost_function", data=recov_smallvar, fit_reg=False, hue='realparams', legend=True)
 smallvarplot.savefig("Simudata/smallvar_recovery.jpg")
 
-largevarplot = sns.lmplot(x="tau", y="cost_function", data=largevar, fit_reg=False, hue='realparams', legend=True)
-largevarplot.savefig("Simudata/largevar_recovery.jpg")
+medvarplot = sns.lmplot(x="tau", y="cost_function", data=recov_medvar, fit_reg=False, hue='realparams', legend=True)
+medvarplot.savefig("Simudata/medianvar_recovery.jpg")
 
+meanvarplot = sns.lmplot(x="tau", y="cost_function", data=recov_meanvar, fit_reg=False, hue='realparams', legend=True)
+meanvarplot.savefig("Simudata/meanvar_recovery.jpg")
 
 
 
