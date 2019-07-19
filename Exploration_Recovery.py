@@ -6,7 +6,7 @@ Created on %(date)s
 @author: %Lea
 """
 
-
+import os
 import pandas as pd
 import numpy as np
 import time
@@ -14,7 +14,7 @@ import math
 from LinearFit import LinearFit
 from BayesianUpdating import BayesianUpdating
 
-
+os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
 
 ################### Get median and mean variances and medians for guidance in creating simulated data
 
@@ -47,7 +47,7 @@ medmed = np.median(datamedians) # will be used as simulation intercept, because 
 
 ################################## Create simulation data for parameter recovery
 
-realvals = pd.DataFrame(columns=['simufile', 'subject', 'tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
+realvals = pd.DataFrame(columns=['simufile', 'subject', 'real_tau', 'real_slope', 'real_intercept', 'real_sigmasqr'])
 
 
 counter = 0
@@ -104,7 +104,7 @@ for tau in [5,10,15,20,50,100]:
             elapsed = time.time() - starttime
             print(counter, elapsed)
             
-            realvals.loc[counter,:] = [str(counter), str(subj), tau, beta_coefs[-1], medmed, sigmasq]
+            realvals.loc[counter,:] = [counter, subj, tau, beta_coefs[-1], medmed, sigmasq]
             
             realvals.to_csv('Simudata/simufile_realvals.csv', sep=";")
 
@@ -112,7 +112,7 @@ for tau in [5,10,15,20,50,100]:
 
 ############################# Try parameter recovery on simulated data
 num_simfiles = counter
-firstlevel = pd.DataFrame(columns=['simufile', 'cost_function', 'tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
+recovery = pd.DataFrame(columns=['simufile', 'cost_function', 'tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
 
 counter = 0
 simul = 1
@@ -121,8 +121,41 @@ for subj in range(1,num_simfiles+1):
     for tau in [5,10,15,20,50,100]:
         (costfun, ml_lm, sigmasq) = LinearFit(tau, subj, simul)
     
-        firstlevel.loc[counter,:] = [str(subj), costfun, tau, ml_lm.coef_[-1], ml_lm.intercept_, sigmasq]
+        recovery.loc[counter,:] = [str(subj), costfun, tau, ml_lm.coef_[-1], ml_lm.intercept_, sigmasq]
         
         counter = counter + 1
         
-        firstlevel.to_csv("Simudata/recovery_simfile_no" + str(subj) + ".csv", sep=";")
+        recovery.to_csv("Simudata/recovery_all_simfiles.csv", sep=";")
+
+
+############################# Plot recovered parameters
+import matplotlib.pyplot as plt  
+import seaborn as sns      
+        
+realvals = pd.read_csv('Simudata/simufile_realvals.csv', sep=";", index_col=0)
+recovery = pd.read_csv("Simudata/recovery_all_simfiles.csv", sep=";", index_col=0)
+
+merged = pd.merge(left=realvals, right=recovery, on="simufile")
+merged['realparams'] = merged.apply(lambda row: "realtau=" + str(row.real_tau) + "_realslope=" + str(row.real_slope), axis=1)
+
+smallvar = merged[merged.sigmasqr <= (medvar + meanvar)/2]
+largevar = merged[merged.sigmasqr > (medvar + meanvar)/2]
+
+smallvarplot = sns.lmplot(x="tau", y="cost_function", data=smallvar, fit_reg=False, hue='realparams', legend=True)
+smallvarplot.savefig("Simudata/smallvar_recovery.jpg")
+
+largevarplot = sns.lmplot(x="tau", y="cost_function", data=largevar, fit_reg=False, hue='realparams', legend=True)
+largevarplot.savefig("Simudata/largevar_recovery.jpg")
+
+
+
+
+
+
+
+
+      
+        
+        
+        
+        
