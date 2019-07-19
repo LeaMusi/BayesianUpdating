@@ -152,13 +152,3 @@ meanvarplot = sns.lmplot(x="tau", y="cost_function", data=recov_meanvar, fit_reg
 meanvarplot.savefig("Simudata/meanvar_recovery.jpg")
 
 
-
-
-
-
-
-      
-        
-        
-        
-        
