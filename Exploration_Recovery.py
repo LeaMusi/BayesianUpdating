@@ -147,18 +147,18 @@ recov_meanvar = merged[round(merged.real_sigmasqr) == round(meanvar)]
 smallvarplot = sns.lineplot(x="tau", y="cost_function", data=recov_smallvar, hue='realparams', legend="brief")
 smallvarplot.legend(loc="top left", bbox_to_anchor=(0.5, 0.5), ncol=2)
 smallvarplot.get_figure().set_size_inches(25, 20)
-smallvarplot.get_figure().savefig("Simudata/smallvar_recovery.jpg")
+smallvarplot.get_figure().savefig("Simudata/smallvar_recovery.jpg", dpi=500)
 plt.clf()
 
 medvarplot = sns.lineplot(x="tau", y="cost_function", data=recov_medvar, hue='realparams', legend="brief")
 medvarplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
 medvarplot.get_figure().set_size_inches(25, 20)
-medvarplot.get_figure().savefig("Simudata/medianvar_recovery.jpg")
+medvarplot.get_figure().savefig("Simudata/medianvar_recovery.jpg", dpi=500)
 plt.clf()
 
 meanvarplot = sns.lineplot(x="tau", y="cost_function", data=recov_meanvar, hue='realparams', legend="brief")
 meanvarplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
 meanvarplot.get_figure().set_size_inches(25, 20)
-meanvarplot.get_figure().savefig("Simudata/meanvar_recovery.jpg")
+meanvarplot.get_figure().savefig("Simudata/meanvar_recovery.jpg", dpi=500)
 plt.clf()
 
