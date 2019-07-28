@@ -40,7 +40,7 @@ for subj in range(1, 41):
 medvar = np.median(datavars) # will be used as simulation sigma sqr, because in reality the error variance will not be much smaller
 meanvar = np.mean(datavars) # will be used as simulation sigma sqr, because in reality the error variance will not be much smaller
 
-medmed = np.median(datamedians) # will be used as simulation intercept, because in reality the intercept will not deviate far from the median
+interc = np.median(datamedians) # will be used as simulation intercept, because in reality the intercept will not deviate far from the median
 
 
 
@@ -53,13 +53,13 @@ realvals = pd.DataFrame(columns=['simufile', 'subject', 'real_tau', 'real_slope'
 
 
 counter = 0
-coef_array = [[0, 0, 0, 0, -15], [0, 0, 0, 0, -2], [0, 0, 0, 0, 2], [0, 0, 0, 0, 15]] # sets the slopes for the control variables to 0
+coef_array = [[0, 0, 0, 0, -50], [0, 0, 0, 0, -2], [0, 0, 0, 0, 2], [0, 0, 0, 0, 50]] # sets the slopes for the control variables to 0
 subj = 1 # which subject's stimulus sequence to use for simulation
 
 for tau in [5,10,15,20,50,100]:
     for bet in range(0,len(coef_array)):
         beta_coefs = coef_array[bet]
-        for sigmasq in [1, medvar, meanvar]:
+        for sigmasq in [0, medvar, meanvar]:
             counter = counter+1
             
             starttime = time.time()
@@ -90,7 +90,7 @@ for tau in [5,10,15,20,50,100]:
             X = input_output[['wordreps', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur']].values
             
             error = np.random.normal(loc=0.0, scale=math.sqrt(sigmasq), size=len(input_output))
-            simul_data = np.dot(X, beta_coefs) + medmed + error
+            simul_data = np.dot(X, beta_coefs) + interc + error
             
             if len(seq)==len(X):
                 seq[['meanamp_ROI']] = simul_data
@@ -106,7 +106,7 @@ for tau in [5,10,15,20,50,100]:
             elapsed = time.time() - starttime
             print(counter, elapsed)
             
-            realvals.loc[counter,:] = [counter, subj, tau, beta_coefs[-1], medmed, sigmasq]
+            realvals.loc[counter,:] = [counter, subj, tau, beta_coefs[-1], interc, sigmasq]
             
             realvals.to_csv('Simudata/simufile_realvals.csv', sep=";")
 
@@ -138,9 +138,9 @@ realvals = pd.read_csv('Simudata/simufile_realvals.csv', sep=";", index_col=0)
 recovery = pd.read_csv("Simudata/recovery_all_simfiles.csv", sep=";", index_col=0)
 
 merged = pd.merge(left=realvals, right=recovery, on="simufile")
-#merged['realparams'] = merged.apply(lambda row: "realtau=" + str(row.real_tau) + "_realslope=" + str(row.real_slope), axis=1)
+merged['real_tau'] = merged.apply(lambda row: "realtau=" + str(row.real_tau), axis=1)
 
-recov_smallvar = merged[round(merged.real_sigmasqr) == round(1)]
+recov_smallvar = merged[round(merged.real_sigmasqr) == round(0)]
 recov_medvar = merged[round(merged.real_sigmasqr) == round(medvar)]
 recov_meanvar = merged[round(merged.real_sigmasqr) == round(meanvar)]
 
