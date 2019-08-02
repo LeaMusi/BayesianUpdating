@@ -59,7 +59,7 @@ subj = 1 # which subject's stimulus sequence to use for simulation
 for tau in [5,10,15,20,50,100]:
     for bet in range(0,len(coef_array)):
         beta_coefs = coef_array[bet]
-        for sigmasq in [0, medvar, meanvar]:
+        for sigmasq in [0, 1, medvar, meanvar]:
             counter = counter+1
             
             starttime = time.time()
@@ -140,25 +140,32 @@ recovery = pd.read_csv("Simudata/recovery_all_simfiles.csv", sep=";", index_col=
 merged = pd.merge(left=realvals, right=recovery, on="simufile")
 merged['real_tau'] = merged.apply(lambda row: "realtau=" + str(row.real_tau), axis=1)
 
-recov_smallvar = merged[round(merged.real_sigmasqr) == round(0)]
-recov_medvar = merged[round(merged.real_sigmasqr) == round(medvar)]
-recov_meanvar = merged[round(merged.real_sigmasqr) == round(meanvar)]
+recov_noerr = merged[round(merged.real_sigmasqr) == round(0)]
+recov_smallerr = merged[round(merged.real_sigmasqr) == round(1)]
+recov_mederr = merged[round(merged.real_sigmasqr) == round(medvar)]
+recov_meanerr = merged[round(merged.real_sigmasqr) == round(meanvar)]
 
-smallvarplot = sns.lineplot(x="tau", y="cost_function", data=recov_smallvar, hue='real_tau', style='real_slope', legend="brief")
-smallvarplot.legend(loc="top left", bbox_to_anchor=(0.5, 0.5), ncol=2)
-smallvarplot.get_figure().set_size_inches(25, 20)
-smallvarplot.get_figure().savefig("Simudata/smallvar_recovery.jpg")
+noerrplot = sns.lineplot(x="tau", y="cost_function", data=recov_noerr, hue='real_tau', style='real_slope', legend="brief")
+noerrplot.legend(loc="top left", bbox_to_anchor=(0.5, 0.5), ncol=2)
+noerrplot.get_figure().set_size_inches(25, 20)
+noerrplot.get_figure().savefig("Simudata/smallerr_recovery.jpg")
 plt.clf()
 
-medvarplot = sns.lineplot(x="tau", y="cost_function", data=recov_medvar, hue='real_tau', style='real_slope', legend="brief")
-medvarplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
-medvarplot.get_figure().set_size_inches(25, 20)
-medvarplot.get_figure().savefig("Simudata/medianvar_recovery.jpg")
+smallerrplot = sns.lineplot(x="tau", y="cost_function", data=recov_smallerr, hue='real_tau', style='real_slope', legend="brief")
+smallerrplot.legend(loc="top left", bbox_to_anchor=(0.5, 0.5), ncol=2)
+smallerrplot.get_figure().set_size_inches(25, 20)
+smallerrplot.get_figure().savefig("Simudata/smallerr_recovery.jpg")
 plt.clf()
 
-meanvarplot = sns.lineplot(x="tau", y="cost_function", data=recov_meanvar, hue='real_tau', style='real_slope', legend="brief")
-meanvarplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
-meanvarplot.get_figure().set_size_inches(25, 20)
-meanvarplot.get_figure().savefig("Simudata/meanvar_recovery.jpg")
+mederrplot = sns.lineplot(x="tau", y="cost_function", data=recov_mederr, hue='real_tau', style='real_slope', legend="brief")
+mederrplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
+mederrplot.get_figure().set_size_inches(25, 20)
+mederrplot.get_figure().savefig("Simudata/medianvar_recovery.jpg")
+plt.clf()
+
+meanerrplot = sns.lineplot(x="tau", y="cost_function", data=recov_meanerr, hue='real_tau', style='real_slope', legend="brief")
+meanerrplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
+meanerrplot.get_figure().set_size_inches(25, 20)
+meanerrplot.get_figure().savefig("Simudata/meanvar_recovery.jpg")
 plt.clf()
 
