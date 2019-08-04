@@ -82,8 +82,12 @@ for tau in [5,10,15,20,50,100]:
             
             input_output = seq.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
             input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur', 'prederr']]
+            input_output = input_output.replace([np.inf, -np.inf], np.nan).dropna(axis=0, subset=["baysur"], how="any") # remove rows with infinite values for baysur
             maxbs = max(input_output.baysur)
             minbs = min(input_output.baysur)
+            input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs) # re-scales the regressor to its own range
+            maxbs = max(input_output.baysur)
+
             input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs)
             
             
@@ -113,6 +117,7 @@ for tau in [5,10,15,20,50,100]:
 
 
 ############################# Try parameter recovery on simulated data
+#counter = 96
 num_simfiles = counter
 recovery = pd.DataFrame(columns=['simufile', 'cost_function', 'tau', 'baysur_slope', 'regr_intercept', 'sigmasqr'])
 
@@ -172,4 +177,3 @@ meanerrplot.get_figure().set_size_inches(25, 20)
 meanerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = " + str(round(meanvar)), fontsize = 30)
 meanerrplot.get_figure().savefig("Simudata/meanvar_recovery.jpg")
 plt.clf()
-
