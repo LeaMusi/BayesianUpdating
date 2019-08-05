@@ -87,8 +87,6 @@ for tau in [5,10,15,20,50,100]:
             minbs = min(input_output.baysur)
             input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs) # re-scales the regressor to its own range
             maxbs = max(input_output.baysur)
-
-            input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs)
             
             
             X = input_output[['wordreps', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur']].values
