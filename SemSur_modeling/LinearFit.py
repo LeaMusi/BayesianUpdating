@@ -47,7 +47,7 @@ def LinearFit(tau, subj, simul):
     maxbs = max(input_output.baysur)
     print("maximum of BS = " + str(maxbs) + ", data points after inf removal: " + str(len(input_output)))
     input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
-    input_output.to_csv("SemSur_sequence_" + substr + "_tau=" +str(tau) + ".csv", sep=";")
+    input_output.to_csv("SemSurSequences/SemSurSequence_" + substr + "_tau=" +str(tau) + ".csv", sep=";")
     
     input_output = input_output.loc[input_output['badseg'] != 1]
     input_output = input_output.dropna(axis=0, how='any', subset=['meanamp_ROI'], inplace=False)

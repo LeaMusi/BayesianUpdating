@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from BayesianUpdating import BayesianUpdating
 
-os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
+os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling")
 
 taurange = np.array([5,10,50,200,500,1000])
 subj = 1

@@ -11,7 +11,7 @@ import time
 import pandas as pd
 from FirstLevelFit import FirstLevelFit
 
-#os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
+#os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/")
 simul = 1
 
 

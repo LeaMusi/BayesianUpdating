@@ -12,7 +12,7 @@ import numpy as np
 import time
 import math
 
-os.chdir("/Users/ringelblume/Desktop/GitHub/Bayesian_Modeling/")
+os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/")
 from LinearFit import LinearFit
 from BayesianUpdating import BayesianUpdating
 
