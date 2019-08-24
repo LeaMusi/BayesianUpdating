@@ -14,7 +14,7 @@ def LinearFit(tau, subj, simul):
     from sklearn.linear_model import LinearRegression
     import numpy as np
     import pandas as pd
-    import matplotlib.pyplot as plt
+    #import matplotlib.pyplot as plt
     #import math
     
     alpha0 = 1
@@ -47,14 +47,15 @@ def LinearFit(tau, subj, simul):
     maxbs = max(input_output.baysur)
     print("maximum of BS = " + str(maxbs) + ", data points after inf removal: " + str(len(input_output)))
     input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
+    input_output.to_csv("SemSur_sequence_" + substr + "_tau=" +str(tau) + ".csv", sep=";")
     
     input_output = input_output.loc[input_output['badseg'] != 1]
     input_output = input_output.dropna(axis=0, how='any', subset=['meanamp_ROI'], inplace=False)
     
-    plt.scatter(input_output.baysur, input_output.meanamp_ROI, alpha=0.5)
-    plt.title('Scatter plot for tau = '+str(tau))
-    plt.savefig("Scatterplotsub="+substr+"tau="+str(tau)+".jpg")
-    plt.clf()
+    #plt.scatter(input_output.baysur, input_output.meanamp_ROI, alpha=0.5)
+    #plt.title('Scatter plot for tau = '+str(tau))
+    #plt.savefig("Scatterplotsub="+substr+"tau="+str(tau)+".jpg")
+    #plt.clf()
     
     y = input_output.meanamp_ROI
     X = input_output[['wordreps', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur']]

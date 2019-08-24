@@ -37,9 +37,10 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     # Compute Bayesian updating for first trial using a prior based on alpha0 and beta0
     wei0 = np.array(range(1,np.size(seqarray,0)+2))
     def downweigh(x):
-        return 1/math.exp((np.size(seqarray,0)+1-x)/tau)
+        return 1/math.exp((x-1)/tau)
     downweigh_v = np.vectorize(downweigh)
     wei1 = downweigh_v(wei0)
+    wei1 = wei1[::-1]
     
     # Fill first row
     row=0

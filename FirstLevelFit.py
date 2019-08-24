@@ -11,10 +11,10 @@ Created on %(date)s
 # while fitting a simple linear regression at each step
 
 def FirstLevelFit(subj, simul):
-    from scipy import optimize
     from LinearFit import LinearFit
     
     ####### Fitting tau
+    #from scipy import optimize
     #def LinearFitForOpt(tau, subj, simul):
     #    (costfun, lm, sigmasq) = LinearFit(tau, subj, simul)
     #    return costfun
@@ -30,7 +30,7 @@ def FirstLevelFit(subj, simul):
     
     
     ####### Using predefined tau
-    tau = 
+    tau = 6.65
     (costfun, ml_lm, sigmasq) = LinearFit(tau, subj, simul)
     
-    return opttau, costfun, ml_lm
+    return costfun, ml_lm
