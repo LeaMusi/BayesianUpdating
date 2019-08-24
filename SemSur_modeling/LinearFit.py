@@ -41,10 +41,29 @@ def LinearFit(tau, subj, simul):
     input_output = seq.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
     input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur', 'prederr']]
     input_output = input_output.replace([np.inf, -np.inf], np.nan).dropna(axis=0, subset=["baysur"], how="any") # remove rows with infinite values for baysur
+    
+    # Re-scale the regressors to their own range
     maxbs = max(input_output.baysur)
     minbs = min(input_output.baysur)
-    input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs) # re-scales the regressor to its own range
+    input_output.baysur = (input_output.baysur-minbs)/(maxbs-minbs) 
     maxbs = max(input_output.baysur)
+    
+    maxwr = max(input_output.wordreps)
+    minwr = min(input_output.wordreps)
+    input_output.wordreps = (input_output.wordreps-minwr)/(maxwr-minwr) 
+
+    maxtf = max(input_output.Typefrequenz_absolut)
+    mintf = min(input_output.Typefrequenz_absolut)
+    input_output.Typefrequenz_absolut = (input_output.Typefrequenz_absolut-mintf)/(maxtf-mintf)
+    
+    maxnm = max(input_output.Nachbarn_mittel_absolut)
+    minnm = min(input_output.Nachbarn_mittel_absolut)
+    input_output.Nachbarn_mittel_absolut = (input_output.Nachbarn_mittel_absolut-minnm)/(maxnm-minnm)
+    
+    maxtl = max(input_output.Typelaenge_Zeichen)
+    mintl = min(input_output.Typelaenge_Zeichen)
+    input_output.Typelaenge_Zeichen = (input_output.Typelaenge_Zeichen-mintl)/(maxtl-mintl)
+    
     print("maximum of BS = " + str(maxbs) + ", data points after inf removal: " + str(len(input_output)))
     input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
     input_output.to_csv("SemSurSequences/SemSurSequence_" + substr + "_tau=" +str(tau) + ".csv", sep=";")
