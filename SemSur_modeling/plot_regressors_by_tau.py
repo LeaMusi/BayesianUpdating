@@ -37,7 +37,7 @@ input_output = seq[['seg', 'badseg', 'meanamp_ROI', 'word.y']]
 # Compute Bayesian Surprise regressors for different tau values
 for tau in taurange:
     print(tau)
-    seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'word.y'], axis=1) # has to be done here, because otherwise next line modifies this object
+    seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen'], axis=1) # has to be done here, because otherwise next line modifies this object
     BayUpdMeasures = BayesianUpdating(seq_forUpd, tau, alpha0, beta0)
     BayUpdMeasures = BayUpdMeasures[['baysur']]
     BayUpdMeasures.columns = ['tau='+str(tau)]

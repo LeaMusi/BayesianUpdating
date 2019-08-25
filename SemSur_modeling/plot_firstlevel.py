@@ -6,12 +6,14 @@ Created on %(date)s
 @author: %Lea Musiolek
 """
 
+import os
+os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/")
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import glob
 
-filenames = sorted(glob.glob('firstlevel_parameters_bounds5_1000*.csv'))
+filenames = sorted(glob.glob('SemSur_parameters*.csv'))
 
 
 data = pd.read_csv(filenames[0], encoding = 'unicode_escape', sep=";")
@@ -32,15 +34,15 @@ plt.savefig('tauplot.png', dpi=400)
 plt.close()
 
 # Compute mean and median of slope and intercept
-slopemedian = np.median(data.regr_slope)
-slopemean = np.mean(data.regr_slope)
+slopemedian = np.median(data.slope_baysur)
+slopemean = np.mean(data.slope_baysur)
 interceptmedian = np.median(data.regr_intercept)
 interceptmean = np.mean(data.regr_intercept)
 
 
 # Plot regression lines for each participant
 for row in range(0, len(data)):
-    f = lambda x: data.regr_slope[row]*x + data.regr_intercept[row]
+    f = lambda x: data.slope_baysur[row]*x + data.regr_intercept[row]
     # x values of line to plot
     x = np.array([0,1])
     # plot fit

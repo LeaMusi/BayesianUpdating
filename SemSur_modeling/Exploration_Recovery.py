@@ -75,13 +75,13 @@ for tau in [5,10,15,20,50,100]:
             seq = seq.dropna(axis=0, how='any', subset=['word.y'], inplace=False)
             seq = seq.sort_values('seg')
             seq[['meanamp_ROI']] = 0
-            seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen'], axis=1)
+            seq_forUpd = seq.drop(['seg', 'badseg', 'meanamp_ROI', 'standard', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen'], axis=1)
             
             BayUpdMeasures = BayesianUpdating(seq_forUpd, tau, alpha0, beta0)
             seq_forUpd = seq_forUpd.drop(['baysur', 'prederr'], axis=1)
             
             input_output = seq.merge(BayUpdMeasures, left_index=True, right_index=True, sort=False)
-            input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur', 'prederr']]
+            input_output = input_output[['seg', 'badseg', 'meanamp_ROI', 'standard', 'wordreps', 'word.y', 'Typefrequenz_absolut', 'Nachbarn_mittel_absolut', 'Typelaenge_Zeichen', 'baysur', 'prederr']]
             input_output = input_output.replace([np.inf, -np.inf], np.nan) # remove rows with infinite values for baysur
             maxbs = max(input_output.baysur)
             minbs = min(input_output.baysur)
