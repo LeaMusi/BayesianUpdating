@@ -32,8 +32,8 @@ def FirstLevelFit(subj, simul):
     
     
     
-    ####### Using predefined tau
-    tau = 6.65
+    ####### Using predefined tau based on forgetting data from Woltz 1990
+    tau = 8.45
     (costfun, ml_lm, sigmasq) = LinearFit(tau, subj, simul)
     opttau = tau
     
