@@ -20,7 +20,7 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     import numpy as np
     #np.seterr(all='ignore')
     import math
-    from kl_dirichlet import divergence
+    from KL_dirichlet import divergence
     #from kl_dirichlet_alt import divergence
     #from simple_difference import divergence
     

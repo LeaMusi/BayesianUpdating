@@ -31,15 +31,13 @@ for sub in range(1,41): # when simul == 1, sub stands for the counter of simulat
     firstlevel.to_csv("SemSur_parameters.csv", sep=";")
     
 # Compute mean and median of slope and intercept
-slopemedian = np.median(firstlevel.slope_baysur)
-slopemean = np.mean(firstlevel.slope_baysur)
-interceptmedian = np.median(firstlevel.regr_intercept)
-interceptmean = np.mean(firstlevel.regr_intercept)
+slopemedian = np.median(firstlevel.slope_baysur[firstlevel.baysur_pval<0.05])
+slopemean = np.mean(firstlevel.slope_baysur[firstlevel.baysur_pval<0.05])
+interceptmedian = np.median(firstlevel.regr_intercept[firstlevel.baysur_pval<0.05])
+interceptmean = np.mean(firstlevel.regr_intercept[firstlevel.baysur_pval<0.05])
 
 with open("firstlevelresults.txt", "w") as text_file:
     text_file.write("Median intercept: " + str(interceptmedian)
     + "\nMedian slope: " + str(slopemedian)
     + "\nMean intercept: " + str(interceptmean)
     + "\nMean slope: " + str(slopemean))
-    
-    
