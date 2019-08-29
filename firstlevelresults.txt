@@ -1,0 +1,4 @@
+Median intercept: 0.7909559690776535
+Median slope: -1.920229513800067
+Mean intercept: 0.7909559690776535
+Mean slope: -1.920229513800067
