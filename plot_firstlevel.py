@@ -7,7 +7,7 @@ Created on %(date)s
 """
 
 import os
-os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/")
+os.chdir(os.path.dirname(__file__))
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt

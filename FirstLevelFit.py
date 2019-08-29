@@ -10,8 +10,6 @@ Created on %(date)s
 # optimizes the tau value for their Bayesian Updating iteratively using the bounded Brent-Dekker method, 
 # while fitting a simple linear regression at each step
 
-import os
-os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/")
 
 def FirstLevelFit(subj, simul):
     from LinearFit import LinearFit

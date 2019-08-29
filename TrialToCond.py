@@ -7,6 +7,7 @@ Created on %(date)s
 """
 
 import os
+os.chdir(os.path.dirname(__file__))
 import pandas as pd
 import numpy as np
 import scipy
@@ -14,7 +15,6 @@ import matplotlib.pyplot as plt
 import matplotlib
 import seaborn as sns
 
-os.chdir("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/")
 
 # Open file for all participants' condition-wise mean amplitudes
 condmeans = pd.DataFrame(columns=['subject', 'condition', 'mean_amplitude'])
@@ -38,14 +38,14 @@ for subj in range(1,41):
     standardmean = dat2['meanamp_ROI'][dat2['deviant'] == 0].mean()
     condmeans.loc[(subj*2)-2,:] = [str(subj), 'deviant', deviantmean]
     condmeans.loc[(subj*2)-1,:] = [str(subj), 'standard', standardmean]
-    condmeans.to_csv("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/cond_meanamps.csv", sep=";")
+    condmeans.to_csv("cond_meanamps.csv", sep=";")
     
 a = condmeans['mean_amplitude'][condmeans['condition'] == 'deviant']
 b = condmeans['mean_amplitude'][condmeans['condition'] == 'standard']
 ttest = scipy.stats.ttest_rel(a, b, axis=0)
 ttest = pd.DataFrame(ttest[0:2])
 ttest['parameter']=['T', 'p']
-ttest.to_csv("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/ttest.csv", sep=";")
+ttest.to_csv("ttest.csv", sep=";")
     
 
 ################# Plots für eine Beispiel-VP:
@@ -83,4 +83,4 @@ ax2.grid(True)
 fig.tight_layout()
 
 # Saving graph to file
-plt.savefig("/Users/ringelblume/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/deviants_SemSur.jpg", dpi=400)
+plt.savefig("deviants_SemSur.jpg", dpi=400)
