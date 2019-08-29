@@ -39,6 +39,12 @@ slopemean = np.mean(data.slope_baysur)
 interceptmedian = np.median(data.regr_intercept)
 interceptmean = np.mean(data.regr_intercept)
 
+with open("firstlevelresults.txt", "w") as text_file:
+    text_file.write("Median intercept: " + str(interceptmedian)
+    + "\nMedian slope: " + str(slopemedian)
+    + "\nMean intercept: " + str(interceptmean)
+    + "\nMean slope: " + str(slopemean))
+
 
 # Plot regression lines for each participant
 for row in range(0, len(data)):
