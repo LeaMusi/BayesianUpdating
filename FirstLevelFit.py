@@ -32,6 +32,6 @@ def FirstLevelFit(subj, simul):
     
     ####### Using predefined tau based on forgetting data from Woltz 1990
     opttau = 19.84
-    ols_lm = LinearFit(opttau, subj, simul, final=1)
+    ols_lm = LinearFit(opttau, subj, simul, final=1, bins=10)
     
     return opttau, ols_lm

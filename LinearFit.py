@@ -9,7 +9,7 @@ Created on %(date)s
 # Defines a function which uses a tau value and a participant's sequence to compute 
 # Bayesian Surprise with uniform priors
 
-def LinearFit(tau, subj, simul, final):
+def LinearFit(tau, subj, simul, final, bins):
     from BayesianUpdating import BayesianUpdating
     import statsmodels.formula.api as smf
     import numpy as np
@@ -71,6 +71,15 @@ def LinearFit(tau, subj, simul, final):
     
     input_output = input_output.loc[input_output['badseg'] != 1]
     input_output = input_output.dropna(axis=0, how='any', subset=['meanamp_ROI'], inplace=False)
+    #input_output.sort_values('baysur', axis=0, ascending=True, inplace=True, kind='mergesort')
+    #input_output.reset_index(inplace=True)
+    
+    quant1 = 0
+    for bin in range(1, bins+1):
+        quant2 = input_output.baysur.quantile(0.1*bin)
+        quantmean = np.mean(input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)])
+        input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)] = quantmean
+        quant1 = quant2
     
     #plt.scatter(input_output.baysur, input_output.meanamp_ROI, alpha=0.5)
     #plt.title('Scatter plot for tau = '+str(tau))

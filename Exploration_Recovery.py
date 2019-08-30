@@ -123,7 +123,7 @@ simul = 1
 
 for subj in range(1,num_simfiles+1):
     for tau in [5,10,15,20,50,100]:
-        ols_lm = LinearFit(tau, subj, simul)
+        ols_lm = LinearFit(tau, subj, simul, final=0, bins=10)
     
         recovery.loc[counter,:] = [str(subj), ols_lm.ssr, tau, ols_lm.params.wordreps, ols_lm.params.Typefrequenz_absolut, ols_lm.params.Nachbarn_mittel_absolut, ols_lm.params.Typelaenge_Zeichen, ols_lm.params.baysur, ols_lm.params.Intercept, ols_lm.pvalues.baysur, np.var(ols_lm.resid)]
         
