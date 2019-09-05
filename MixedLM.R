@@ -3,6 +3,7 @@ rm(list = ls())
 library(ggplot2)
 library(plot3D)
 library(lme4)
+library(Hmisc)
 # Regressor-Dateien einlesen
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -50,5 +51,13 @@ modelcomp$pval <- baysur.corraov$`Pr(>Chisq)`[2]
 
 write.table(modelcomp, file="lmms_uncorr.csv", sep=";", row.names = FALSE)
 
+data_use <- data
 
+#data_use$baysur <- cut2(data_use$baysur, g=6, levels.mean=TRUE)
 
+data_use$standard[data_use$standard==224] <- NA
+data_use$standard[data_use$standard==225] <- 0
+data_use$standard[data_use$standard==223 | data_use$standard==222] <- 1
+table(data_use$standard)
+
+cor(cbind(data_use$standard, data_use$baysur), use = "pairwise.complete.obs")

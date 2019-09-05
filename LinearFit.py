@@ -84,15 +84,23 @@ def LinearFit(tau, subj, simul, final, bins):
         quant1 = 0
         for bin in range(1, bins+1):
             quant2 = borders[bin]
+            
             quantmean = np.mean(input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)])
             input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)] = quantmean
-            quant1 = quant2
             
-        #input_output['baysur'].value_counts()   
-        input_output.baysur.loc[(input_output['baysur'] > borders[1]) & (input_output['baysur'] < borders[-2])] = np.nan
-        input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
-        input_output.baysur.loc[(input_output['baysur'] < borders[1])] = 0
-        input_output.baysur.loc[(input_output['baysur'] > borders[1])] = 1
+            N400mean = np.mean(input_output.meanamp_ROI.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)])
+            input_output.meanamp_ROI.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)] = N400mean
+            
+            quant1 = quant2
+
+            
+        #input_output['baysur'].value_counts()  
+        #input_output['meanamp_ROI'].value_counts()  
+        
+        #input_output.baysur.loc[(input_output['baysur'] > borders[1]) & (input_output['baysur'] < borders[-2])] = np.nan
+        #input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
+        #input_output.baysur.loc[(input_output['baysur'] < borders[1])] = 0
+        #input_output.baysur.loc[(input_output['baysur'] > borders[1])] = 1
     
     #plt.scatter(input_output.baysur, input_output.meanamp_ROI, alpha=0.5)
     #plt.title('Scatter plot for tau = '+str(tau))
