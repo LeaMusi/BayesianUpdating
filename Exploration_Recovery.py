@@ -114,7 +114,7 @@ for tau in [5,10,15,20,50,100]:
 
 
 ############################# Try parameter recovery on simulated data
-#counter = 96
+counter = 96
 num_simfiles = counter
 recovery = pd.DataFrame(columns=['simufile', 'cost_function', 'tau', 'slope_wordreps', 'slope_Typefrequenz_absolut', 'slope_Nachbarn_mittel_absolut', 'slope_Typelaenge_Zeichen', 'slope_baysur', 'regr_intercept', 'baysur_pval', 'resid_var'])
 
@@ -123,7 +123,7 @@ simul = 1
 
 for subj in range(1,num_simfiles+1):
     for tau in [5,10,15,20,50,100]:
-        ols_lm = LinearFit(tau, subj, simul, final=0, bins=10)
+        ols_lm = LinearFit(tau, subj, simul, final=0, bins=6)
     
         recovery.loc[counter,:] = [str(subj), ols_lm.ssr, tau, ols_lm.params.wordreps, ols_lm.params.Typefrequenz_absolut, ols_lm.params.Nachbarn_mittel_absolut, ols_lm.params.Typelaenge_Zeichen, ols_lm.params.baysur, ols_lm.params.Intercept, ols_lm.pvalues.baysur, np.var(ols_lm.resid)]
         

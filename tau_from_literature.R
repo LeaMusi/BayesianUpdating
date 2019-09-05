@@ -6,7 +6,7 @@ rm(list = ls())
 
 library(ggplot2)
 library(readxl)
-dataf <- read_excel("~/Desktop/GitHub/Semantic_Surprise_N400/SemSur_modeling/Woltz1990_Table2.xlsx")
+dataf <- read_excel("Woltz1990_Table2.xlsx")
 
 # Set basic function
 expFunc <- function(x,tau){1/exp((x-1)/tau)}

@@ -14,7 +14,7 @@ def LinearFit(tau, subj, simul, final, bins):
     import statsmodels.formula.api as smf
     import numpy as np
     import pandas as pd
-    #import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt
     #import math
     
     alpha0 = 1
@@ -74,12 +74,25 @@ def LinearFit(tau, subj, simul, final, bins):
     #input_output.sort_values('baysur', axis=0, ascending=True, inplace=True, kind='mergesort')
     #input_output.reset_index(inplace=True)
     
-    quant1 = 0
-    for bin in range(1, bins+1):
-        quant2 = input_output.baysur.quantile(0.1*bin)
-        quantmean = np.mean(input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)])
-        input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)] = quantmean
-        quant1 = quant2
+    if bins != 0:
+        borders = list()
+        borders.append(0)
+        for bin in range(1, bins):
+            borders.append(input_output.baysur.quantile(1/bins*bin))
+        borders.append(1)
+        
+        quant1 = 0
+        for bin in range(1, bins+1):
+            quant2 = borders[bin]
+            quantmean = np.mean(input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)])
+            input_output.baysur.loc[(input_output['baysur'] >= quant1) & (input_output['baysur'] <= quant2)] = quantmean
+            quant1 = quant2
+            
+        #input_output['baysur'].value_counts()   
+        input_output.baysur.loc[(input_output['baysur'] > borders[1]) & (input_output['baysur'] < borders[-2])] = np.nan
+        input_output = input_output.dropna(axis=0, how='any', subset=['baysur'], inplace=False)
+        input_output.baysur.loc[(input_output['baysur'] < borders[1])] = 0
+        input_output.baysur.loc[(input_output['baysur'] > borders[1])] = 1
     
     #plt.scatter(input_output.baysur, input_output.meanamp_ROI, alpha=0.5)
     #plt.title('Scatter plot for tau = '+str(tau))
