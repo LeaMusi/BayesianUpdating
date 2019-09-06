@@ -47,7 +47,7 @@ for row in range(0, len(data)):
     # plot fit
     plt.plot(x, f(x), marker='', linewidth=0.3, alpha=0.9)
     
-f = lambda x: slopemedian*x + interceptmedian
+f = lambda x: slopemean * x + interceptmean
 # x values of line to plot
 x = np.array([0,1])
 # plot fit
