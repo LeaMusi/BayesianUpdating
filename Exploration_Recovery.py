@@ -123,7 +123,7 @@ simul = 1
 
 for subj in range(1,num_simfiles+1):
     for tau in [5,10,15,20,50,100]:
-        ols_lm = LinearFit(tau, subj, simul, final=0, bins=6)
+        ols_lm = LinearFit(tau, subj, simul, final=0, bins=0)
     
         recovery.loc[counter,:] = [str(subj), ols_lm.ssr, tau, ols_lm.params.wordreps, ols_lm.params.Typefrequenz_absolut, ols_lm.params.Nachbarn_mittel_absolut, ols_lm.params.Typelaenge_Zeichen, ols_lm.params.baysur, ols_lm.params.Intercept, ols_lm.pvalues.baysur, np.var(ols_lm.resid)]
         
@@ -137,7 +137,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns      
         
 realvals = pd.read_csv('Simudata/simufile_realvals.csv', sep=";", index_col=0)
-recovery = pd.read_csv("Simudata/recovery_all_simfiles.csv", sep=";", index_col=0)
+recovery = pd.read_csv("Simudata/recovery_all_simfiles_nobins.csv", sep=";", index_col=0)
 
 merged = pd.merge(left=realvals, right=recovery, on="simufile")
 merged['real_tau'] = merged.apply(lambda row: "realtau=" + str(row.real_tau), axis=1)
@@ -148,29 +148,37 @@ recov_mederr = merged[round(merged.real_sigmasqr) == round(medvar)]
 recov_meanerr = merged[round(merged.real_sigmasqr) == round(meanvar)]
 
 noerrplot = sns.lineplot(x="tau", y="cost_function", data=recov_noerr, hue='real_tau', style='real_slope', legend="brief")
-noerrplot.legend(loc="top left", bbox_to_anchor=(0.5, 0.5), ncol=2)
-noerrplot.get_figure().set_size_inches(25, 20)
-noerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = 0", fontsize = 30)
+noerrplot.legend(loc="top left", bbox_to_anchor=(0.4, 0.7), ncol=2)
+noerrplot.get_figure().set_size_inches(12, 10)
+noerrplot.set_xlabel('Tau value', fontsize=30)
+noerrplot.set_ylabel('Residual sum of squares', fontsize=30)
+#noerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = 0", fontsize = 30)
 noerrplot.get_figure().savefig("Simudata/noerr_recovery.jpg")
 plt.clf()
 
 smallerrplot = sns.lineplot(x="tau", y="cost_function", data=recov_smallerr, hue='real_tau', style='real_slope', legend="brief")
-smallerrplot.legend(loc="top left", bbox_to_anchor=(0.5, 0.5), ncol=2)
-smallerrplot.get_figure().set_size_inches(25, 20)
-smallerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = 1", fontsize = 30)
+smallerrplot.legend(loc="top left", bbox_to_anchor=(0.4, 0.7), ncol=2)
+smallerrplot.get_figure().set_size_inches(12, 10)
+smallerrplot.set_xlabel('Tau value', fontsize=30)
+smallerrplot.set_ylabel('Residual sum of squares', fontsize=30)
+#smallerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = 1", fontsize = 30)
 smallerrplot.get_figure().savefig("Simudata/smallerr_recovery.jpg")
 plt.clf()
 
 mederrplot = sns.lineplot(x="tau", y="cost_function", data=recov_mederr, hue='real_tau', style='real_slope', legend="brief")
 mederrplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
-mederrplot.get_figure().set_size_inches(25, 20)
-mederrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = " + str(round(medvar)), fontsize = 30)
+mederrplot.get_figure().set_size_inches(12, 10)
+mederrplot.set_xlabel('Tau value', fontsize=30)
+mederrplot.set_ylabel('Residual sum of squares', fontsize=30)
+#mederrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = " + str(round(medvar)), fontsize = 30)
 mederrplot.get_figure().savefig("Simudata/medianvar_recovery.jpg")
 plt.clf()
 
 meanerrplot = sns.lineplot(x="tau", y="cost_function", data=recov_meanerr, hue='real_tau', style='real_slope', legend="brief")
-meanerrplot.legend(bbox_to_anchor=(0.15, 0.18), ncol=4)
-meanerrplot.get_figure().set_size_inches(25, 20)
-meanerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = " + str(round(meanvar)), fontsize = 30)
+meanerrplot.legend(bbox_to_anchor=(0.15, 0.1), ncol=4)
+meanerrplot.get_figure().set_size_inches(12, 10)
+meanerrplot.set_xlabel('Tau value', fontsize=30)
+meanerrplot.set_ylabel('Residual sum of squares', fontsize=30)
+#meanerrplot.set_title("Cost function for the Bayesian Surprise model using simulation data with error variance = " + str(round(meanvar)), fontsize = 30)
 meanerrplot.get_figure().savefig("Simudata/meanvar_recovery.jpg")
 plt.clf()

@@ -35,10 +35,10 @@ data_use <- data
 # Nur die ersten paar Hundert Trials benutzen
 #data_use <- subset(data, seg<=1000)
 
-#baysur.corr     = lmer(meanamp_ROI ~ wordreps + baysur + (1 | sub) + (1 | word.y), data=data_use, REML=FALSE)
-#baysur.corr0    = lmer(meanamp_ROI ~ wordreps +          (1 | sub) + (1 | word.y), data=data_use, REML=FALSE)
-baysur.corr     = lmer(meanamp_ROI ~ wordreps + Typefrequenz_absolut + Nachbarn_mittel_absolut + Typelaenge_Zeichen + baysur + (1 | sub) + (0 + baysur | sub) + (1 | word.y), data=data_use, REML=FALSE)
-baysur.corr0    = lmer(meanamp_ROI ~ wordreps + Typefrequenz_absolut + Nachbarn_mittel_absolut + Typelaenge_Zeichen +          (1 | sub) + (0 + baysur | sub) + (1 | word.y), data=data_use, REML=FALSE)
+baysur.corr     = lmer(meanamp_ROI ~ wordreps + baysur + (1 | sub) + (0 + baysur | sub) + (1 | word.y) + (0 + baysur | word.y), data=data_use, REML=FALSE)
+baysur.corr0    = lmer(meanamp_ROI ~ wordreps +          (1 | sub) + (0 + baysur | sub) + (1 | word.y) + (0 + baysur | word.y), data=data_use, REML=FALSE)
+#baysur.corr     = lmer(meanamp_ROI ~ wordreps + Typefrequenz_absolut + Nachbarn_mittel_absolut + Typelaenge_Zeichen + baysur + (1 | sub) + (0 + baysur | sub) + (1 | word.y), data=data_use, REML=FALSE)
+#baysur.corr0    = lmer(meanamp_ROI ~ wordreps + Typefrequenz_absolut + Nachbarn_mittel_absolut + Typelaenge_Zeichen +          (1 | sub) + (0 + baysur | sub) + (1 | word.y), data=data_use, REML=FALSE)
 summary(baysur.corr)
 summary(baysur.corr0)
 baysur.corraov <- anova(baysur.corr, baysur.corr0, test="Chisq")
