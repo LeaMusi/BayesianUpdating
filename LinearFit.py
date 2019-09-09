@@ -74,7 +74,7 @@ def LinearFit(tau, subj, simul, final, bins):
     #input_output.sort_values('baysur', axis=0, ascending=True, inplace=True, kind='mergesort')
     #input_output.reset_index(inplace=True)
     
-    if bins != 0:
+    if bins != 0: # perform parametrical averaging
         borders = list()
         borders.append(0)
         for bin in range(1, bins):

@@ -52,11 +52,11 @@ ttest.to_csv("ttest.csv", sep=";")
 
 
 # Deviant- und Surprisedaten
-x = dat['seg'][0:100]
-y1 = dat['baysur'][0:100]
-y2 = dat['deviant'][0:100]
+x = dat['seg'][0:50]
+y1 = dat['baysur'][0:50]
+y2 = dat['deviant'][0:50]
 
-matplotlib.rc('figure', figsize=(12, 5))   # this is to overwrite default aspect of graph to make x-axis longer
+matplotlib.rc('figure', figsize=(7, 5))   # this is to overwrite default aspect of graph to make x-axis longer
 
 fig, ax1 = plt.subplots()
 
@@ -64,6 +64,7 @@ fig, ax1 = plt.subplots()
 ax1.bar(x, y2, width=0.5, color='powderblue')
 ax1.yaxis.set_label_position("right")
 ax1.yaxis.tick_right()
+ax1.set_xlabel('Trial', fontsize=20)
 ax1.set_ylabel('Deviants', color='cadetblue', fontsize=20)
 ax1.set_yticks([])
 ax1.yaxis.set_major_formatter(plt.NullFormatter())

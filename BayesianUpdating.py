@@ -21,6 +21,8 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     #np.seterr(all='ignore')
     import math
     from KL_dirichlet import divergence
+    #import matplotlib
+    #import matplotlib.pyplot as plt
     #from kl_dirichlet_alt import divergence
     #from simple_difference import divergence
     
@@ -42,6 +44,17 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     wei1 = downweigh_v(wei0)
     wei1 = wei1[::-1]
     
+    
+    #matplotlib.rc('figure', figsize=(7, 5))   # this is to overwrite default aspect of graph to make x-axis longer
+    #fig, weiplot = plt.subplots()
+    #weiplot.plot(wei0, wei1, 'g', marker='o',  markersize=4)
+    #weiplot.set_ylabel('Trial weight', color='g', fontsize=20)
+    #weiplot.tick_params('y', colors='g')
+    #weiplot.set_xlabel('Trial', fontsize=20)
+    #fig.tight_layout()
+    #plt.savefig("Weighingfun_tau="+str(tau)+".jpg", dpi=400)
+    #plt.clf()
+    
     # Fill first row
     row=0
     #print(row)
@@ -50,9 +63,9 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
     
     for col in range(0, np.size(seqarray,1)):
         past = seqarray[0:row+1,col]
-        past = np.insert(past, 0, 1)
+        past = np.insert(past, 0, alpha0)
         pasttotal = np.ones(row+1)
-        pasttotal = np.insert(pasttotal, 0, 2)
+        pasttotal = np.insert(pasttotal, 0, alpha0+beta0)
         seqarray2[row, -1] = sum(pasttotal*wei1[len(wei1)-row-2:len(wei1)+1])
         alphapost = sum(past*wei1[len(wei1)-row-2:len(wei1)+1])
         betapost = sum((pasttotal-past)*wei1[len(wei1)-row-2:len(wei1)+1])
@@ -72,9 +85,9 @@ def BayesianUpdating(seq_input, tau, alpha0, beta0):
         
         for col in range(0, np.size(seqarray,1)):
             past = seqarray[0:row+1,col]
-            past = np.insert(past, 0, 1)
+            past = np.insert(past, 0, alpha0)
             pasttotal = np.ones(row+1)
-            pasttotal = np.insert(pasttotal, 0, 2)
+            pasttotal = np.insert(pasttotal, 0, alpha0+beta0)
             seqarray2[row, -1] = sum(pasttotal*wei1[len(wei1)-row-2:len(wei1)+1])
             alphapost = sum(past*wei1[len(wei1)-row-2:len(wei1)+1])
             betapost = sum((pasttotal-past)*wei1[len(wei1)-row-2:len(wei1)+1])

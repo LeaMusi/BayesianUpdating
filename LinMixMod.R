@@ -51,7 +51,7 @@ modelcomp$df <- baysur.corraov$`Chi Df`[2]
 modelcomp$pval <- baysur.corraov$`Pr(>Chisq)`[2]
 #ggplot(data_use,aes(y = meanamp_ROI, x = baysur)) + geom_point() + geom_smooth(method = 'lm')
 
-write.table(modelcomp, file="lmms_uncorr.csv", sep=";", row.names = FALSE)
+write.table(modelcomp, file="lmms_fixcorr.csv", sep=";", row.names = FALSE)
 
 data_use <- data
 
